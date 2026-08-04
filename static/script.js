@@ -13,17 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const navLinks = document.getElementById("navLinks");
 
     if (menuButton && navLinks) {
+
         menuButton.addEventListener("click", function () {
             navLinks.classList.toggle("active");
         });
-    }
 
-
-    // ------------------------------------------------------------
-    // Close mobile menu after clicking a link
-    // ------------------------------------------------------------
-
-    if (navLinks) {
         const links = navLinks.querySelectorAll("a");
 
         links.forEach(function (link) {
@@ -41,16 +35,31 @@ document.addEventListener("DOMContentLoaded", function () {
     const fileInput = document.getElementById("fileInput");
     const fileName = document.getElementById("fileName");
 
-    if (fileInput && fileName) {
+    if (fileInput) {
+
         fileInput.addEventListener("change", function () {
 
             if (fileInput.files.length > 0) {
-                fileName.textContent = fileInput.files[0].name;
+
+                if (fileName) {
+                    fileName.textContent = fileInput.files[0].name;
+                }
+
+                console.log(
+                    "Selected file:",
+                    fileInput.files[0].name
+                );
+
             } else {
-                fileName.textContent = "No file selected";
+
+                if (fileName) {
+                    fileName.textContent = "No file selected";
+                }
+
             }
 
         });
+
     }
 
 
@@ -63,29 +72,69 @@ document.addEventListener("DOMContentLoaded", function () {
     if (uploadArea && fileInput) {
 
         uploadArea.addEventListener("dragover", function (event) {
+
             event.preventDefault();
+
             uploadArea.classList.add("drag-over");
+
         });
 
+
         uploadArea.addEventListener("dragleave", function () {
+
             uploadArea.classList.remove("drag-over");
+
         });
+
 
         uploadArea.addEventListener("drop", function (event) {
 
             event.preventDefault();
+
             uploadArea.classList.remove("drag-over");
 
             const files = event.dataTransfer.files;
 
             if (files.length > 0) {
-                fileInput.files = files;
 
-                if (fileName) {
-                    fileName.textContent = files[0].name;
+                const file = files[0];
+
+                // Check CSV file
+                if (
+                    file.type === "text/csv" ||
+                    file.name.toLowerCase().endsWith(".csv")
+                ) {
+
+                    try {
+
+                        const dataTransfer = new DataTransfer();
+
+                        dataTransfer.items.add(file);
+
+                        fileInput.files = dataTransfer.files;
+
+                        if (fileName) {
+                            fileName.textContent = file.name;
+                        }
+
+                    } catch (error) {
+
+                        console.log(
+                            "Unable to attach dropped file automatically."
+                        );
+
+                    }
+
+                } else {
+
+                    alert("Please upload a CSV file.");
+
                 }
+
             }
+
         });
+
     }
 
 
@@ -107,16 +156,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 submitButton.disabled = true;
 
-                const originalText = submitButton.textContent;
+                const originalText =
+                    submitButton.textContent;
 
                 submitButton.textContent = "Processing...";
 
-                // Prevent button from remaining disabled forever
+                // Restore button after 10 seconds
                 setTimeout(function () {
+
                     submitButton.disabled = false;
-                    submitButton.textContent = originalText;
+
+                    submitButton.textContent =
+                        originalText;
+
                 }, 10000);
+
             }
+
         });
 
     });
@@ -134,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         input.addEventListener("input", function () {
 
-            if (input.value < 0) {
+            if (input.value !== "" && input.value < 0) {
                 input.value = 0;
             }
 
@@ -151,13 +207,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     counters.forEach(function (counter) {
 
-        const target = parseFloat(counter.dataset.target);
+        const target = parseFloat(
+            counter.dataset.target
+        );
 
         if (isNaN(target)) {
             return;
         }
 
         let current = 0;
+
         const duration = 1000;
         const steps = 50;
         const increment = target / steps;
@@ -167,15 +226,61 @@ document.addEventListener("DOMContentLoaded", function () {
             current += increment;
 
             if (current >= target) {
+
                 current = target;
+
                 clearInterval(interval);
+
             }
 
-            counter.textContent = Number.isInteger(target)
-                ? Math.round(current)
-                : current.toFixed(1);
+            counter.textContent =
+                Number.isInteger(target)
+                    ? Math.round(current)
+                    : current.toFixed(1);
 
         }, duration / steps);
+
+    });
+
+
+    // ------------------------------------------------------------
+    // Probability Progress Bars
+    // ------------------------------------------------------------
+
+    const progressBars =
+        document.querySelectorAll(".progress-bar");
+
+    progressBars.forEach(function (bar) {
+
+        let value = bar.dataset.value;
+
+        if (!value) {
+            value = bar.dataset.probability;
+        }
+
+        if (!value) {
+            return;
+        }
+
+        value = parseFloat(value);
+
+        if (isNaN(value)) {
+            return;
+        }
+
+        // Convert decimal probability to percentage
+        if (value <= 1) {
+            value = value * 100;
+        }
+
+        // Keep value between 0 and 100
+        value = Math.max(0, Math.min(100, value));
+
+        setTimeout(function () {
+
+            bar.style.width = value + "%";
+
+        }, 100);
 
     });
 
@@ -184,11 +289,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Risk Level Styling
     // ------------------------------------------------------------
 
-    const riskElements = document.querySelectorAll(".risk-level");
+    const riskElements =
+        document.querySelectorAll(".risk-level");
 
     riskElements.forEach(function (element) {
 
-        const risk = element.textContent.trim().toLowerCase();
+        const risk =
+            element.textContent.trim().toLowerCase();
 
         element.classList.remove(
             "low-risk",
@@ -197,15 +304,17 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
         if (risk.includes("low")) {
+
             element.classList.add("low-risk");
-        }
 
-        else if (risk.includes("medium")) {
+        } else if (risk.includes("medium")) {
+
             element.classList.add("medium-risk");
-        }
 
-        else if (risk.includes("high")) {
+        } else if (risk.includes("high")) {
+
             element.classList.add("high-risk");
+
         }
 
     });
@@ -215,19 +324,22 @@ document.addEventListener("DOMContentLoaded", function () {
     // Smooth Scrolling
     // ------------------------------------------------------------
 
-    const anchors = document.querySelectorAll('a[href^="#"]');
+    const anchors =
+        document.querySelectorAll('a[href^="#"]');
 
     anchors.forEach(function (anchor) {
 
         anchor.addEventListener("click", function (event) {
 
-            const targetId = anchor.getAttribute("href");
+            const targetId =
+                anchor.getAttribute("href");
 
-            if (targetId === "#") {
+            if (!targetId || targetId === "#") {
                 return;
             }
 
-            const target = document.querySelector(targetId);
+            const target =
+                document.querySelector(targetId);
 
             if (target) {
 
@@ -239,6 +351,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
 
             }
+
+        });
+
+    });
+
+
+    // ------------------------------------------------------------
+    // Download Button Feedback
+    // ------------------------------------------------------------
+
+    const downloadButtons =
+        document.querySelectorAll(
+            'a[href*="download"], a[download]'
+        );
+
+    downloadButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            button.style.opacity = "0.7";
+
+            setTimeout(function () {
+                button.style.opacity = "";
+            }, 1500);
 
         });
 

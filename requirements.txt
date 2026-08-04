@@ -1,8 +1,7 @@
+Flask
 pandas
 numpy
 scikit-learn
 matplotlib
-fastapi
-uvicorn
-python-multipart
 joblib
+gunicorn

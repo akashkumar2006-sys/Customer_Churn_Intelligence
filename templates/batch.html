@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Batch Churn Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div>
+
+            <h1>
+                Batch Churn Prediction
+            </h1>
+
+            <p>
+                Analyze multiple customers using a CSV file
+            </p>
+
+        </div>
+
+        <div class="badge">
+            Batch Analysis
+        </div>
+
+    </header>
+
+
+
+    <!-- UPLOAD CARD -->
+
+    <section class="card batch-card">
+
+
+        <h2>
+            Upload Customer Dataset
+        </h2>
+
+
+        <p class="description">
+
+            Upload a CSV file containing customer
+            information. The machine learning model
+            will calculate churn probability and risk
+            level for every customer.
+
+        </p>
+
+
+
+        <!-- UPLOAD AREA -->
+
+        <div class="upload-area">
+
+
+            <div class="upload-icon">
+                📊
+            </div>
+
+
+            <h3>
+                Select CSV File
+            </h3>
+
+
+            <p>
+
+                Your CSV should contain the same customer
+                information used during model training.
+
+            </p>
+
+
+            <form
+                action="/batch_predict"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+
+                <input
+                    type="file"
+                    name="file"
+                    accept=".csv"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="predict-button"
+                >
+
+                    Analyze Customers
+
+                </button>
+
+
+            </form>
+
+
+        </div>
+
+
+
+        <!-- SAMPLE FILE -->
+
+        <div class="analysis-box">
+
+
+            <h3>
+                Don't have a CSV?
+            </h3>
+
+
+            <p>
+
+                Download our sample customer dataset,
+                fill in your own customer information,
+                and upload it above.
+
+            </p>
+
+
+            <a
+                href="/download_sample"
+                class="back-button"
+            >
+
+                📥 Download Sample CSV
+
+            </a>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- REQUIRED COLUMNS -->
+
+    <section class="card">
+
+
+        <h2>
+            Required Customer Fields
+        </h2>
+
+
+        <p class="description">
+
+            Your CSV should contain these customer
+            attributes for accurate predictions.
+
+        </p>
+
+
+        <div class="column-list">
+
+
+            <code>gender</code>
+
+            <code>SeniorCitizen</code>
+
+            <code>Partner</code>
+
+            <code>Dependents</code>
+
+            <code>tenure</code>
+
+            <code>PhoneService</code>
+
+            <code>MultipleLines</code>
+
+            <code>InternetService</code>
+
+            <code>OnlineSecurity</code>
+
+            <code>OnlineBackup</code>
+
+            <code>DeviceProtection</code>
+
+            <code>TechSupport</code>
+
+            <code>StreamingTV</code>
+
+            <code>StreamingMovies</code>
+
+            <code>Contract</code>
+
+            <code>PaperlessBilling</code>
+
+            <code>PaymentMethod</code>
+
+            <code>MonthlyCharges</code>
+
+            <code>TotalCharges</code>
+
+
+        </div>
+
+
+        <div class="analysis-box">
+
+
+            <h3>
+                Optional Column
+            </h3>
+
+
+            <p>
+
+                <strong>customerID</strong> can also
+                be included. It is kept in the results
+                so you can identify each customer.
+
+            </p>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- HOW IT WORKS -->
+
+    <section class="card">
+
+
+        <h2>
+            How Batch Prediction Works
+        </h2>
+
+
+        <div class="feature-grid">
+
+
+            <div class="feature-card">
+
+
+                <div class="feature-icon">
+                    1️⃣
+                </div>
+
+
+                <h3>
+                    Upload
+                </h3>
+
+
+                <p>
+
+                    Upload a CSV containing
+                    customer information.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="feature-card">
+
+
+                <div class="feature-icon">
+                    2️⃣
+                </div>
+
+
+                <h3>
+                    Analyze
+                </h3>
+
+
+                <p>
+
+                    The trained machine learning
+                    model analyzes every customer.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="feature-card">
+
+
+                <div class="feature-icon">
+                    3️⃣
+                </div>
+
+
+                <h3>
+                    Results
+                </h3>
+
+
+                <p>
+
+                    Get churn prediction,
+                    probability and risk level.
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- NAVIGATION -->
+
+    <section class="card">
+
+
+        <a
+            href="/"
+            class="back-button"
+        >
+
+            ← Single Prediction
+
+        </a>
+
+
+        <a
+            href="/dashboard"
+            class="back-button"
+        >
+
+            📈 Dashboard
+
+        </a>
+
+
+        <a
+            href="/model_info"
+            class="back-button"
+        >
+
+            🤖 Model Performance
+
+        </a>
+
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        Customer Churn Intelligence & Prediction Platform
+
+    </footer>
+
+
+</div>
+
+
+</body>
+
+</html>

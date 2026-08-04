@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Churn Analytics Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div>
+
+            <h1>
+                Churn Analytics Dashboard
+            </h1>
+
+            <p>
+                Understand customer churn patterns
+                across your dataset
+            </p>
+
+        </div>
+
+        <div class="badge">
+            Analytics
+        </div>
+
+    </header>
+
+
+    {% if error %}
+
+    <!-- ERROR -->
+
+    <section class="card">
+
+        <div class="error-box">
+
+            <strong>
+                Dashboard Error
+            </strong>
+
+            <p>
+                {{ error }}
+            </p>
+
+        </div>
+
+    </section>
+
+    {% else %}
+
+
+    <!-- OVERVIEW -->
+
+    <section class="card">
+
+        <h2>
+            Dataset Overview
+        </h2>
+
+        <p class="description">
+
+            Overview of customer retention and churn
+            within the available dataset.
+
+        </p>
+
+
+        <div class="result-grid">
+
+
+            <div class="metric-card">
+
+                <span>
+                    Total Customers
+                </span>
+
+                <strong>
+                    {{ total_customers }}
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Customers Churned
+                </span>
+
+                <strong>
+                    {{ churned_customers }}
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Customers Retained
+                </span>
+
+                <strong>
+                    {{ retained_customers }}
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Overall Churn Rate
+                </span>
+
+                <strong>
+                    {{ churn_rate }}%
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- CHURN INSIGHT -->
+
+    <section class="card">
+
+        <h2>
+            Churn Insight
+        </h2>
+
+
+        <div class="analysis-box">
+
+            <h3>
+                Overall Customer Churn
+            </h3>
+
+            <p>
+
+                Out of {{ total_customers }} customers,
+                {{ churned_customers }} are recorded as
+                churned and {{ retained_customers }}
+                are retained.
+
+            </p>
+
+            <p>
+
+                The overall churn rate is
+                <strong>{{ churn_rate }}%</strong>.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- CONTRACT ANALYSIS -->
+
+    <section class="card">
+
+        <h2>
+            Churn by Contract Type
+        </h2>
+
+        <p class="description">
+
+            Compare customer churn across different
+            contract types.
+
+        </p>
+
+
+        {% if contract_data %}
+
+        <div class="analysis-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Contract
+                        </th>
+
+                        <th>
+                            Customers
+                        </th>
+
+                        <th>
+                            Churned
+                        </th>
+
+                        <th>
+                            Churn Rate
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in contract_data %}
+
+                    <tr>
+
+                        <td>
+                            {{ item.contract }}
+                        </td>
+
+                        <td>
+                            {{ item.customers }}
+                        </td>
+
+                        <td>
+                            {{ item.churned }}
+                        </td>
+
+                        <td>
+                            {{ item.churn_rate }}%
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- INTERNET SERVICE ANALYSIS -->
+
+    <section class="card">
+
+        <h2>
+            Churn by Internet Service
+        </h2>
+
+        <p class="description">
+
+            Compare churn patterns across internet
+            service categories.
+
+        </p>
+
+
+        {% if internet_data %}
+
+        <div class="analysis-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Internet Service
+                        </th>
+
+                        <th>
+                            Customers
+                        </th>
+
+                        <th>
+                            Churned
+                        </th>
+
+                        <th>
+                            Churn Rate
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in internet_data %}
+
+                    <tr>
+
+                        <td>
+                            {{ item.internet_service }}
+                        </td>
+
+                        <td>
+                            {{ item.customers }}
+                        </td>
+
+                        <td>
+                            {{ item.churned }}
+                        </td>
+
+                        <td>
+                            {{ item.churn_rate }}%
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- PAYMENT ANALYSIS -->
+
+    <section class="card">
+
+        <h2>
+            Churn by Payment Method
+        </h2>
+
+        <p class="description">
+
+            Compare churn patterns across customer
+            payment methods.
+
+        </p>
+
+
+        {% if payment_data %}
+
+        <div class="analysis-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Payment Method
+                        </th>
+
+                        <th>
+                            Customers
+                        </th>
+
+                        <th>
+                            Churned
+                        </th>
+
+                        <th>
+                            Churn Rate
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in payment_data %}
+
+                    <tr>
+
+                        <td>
+                            {{ item.payment_method }}
+                        </td>
+
+                        <td>
+                            {{ item.customers }}
+                        </td>
+
+                        <td>
+                            {{ item.churned }}
+                        </td>
+
+                        <td>
+                            {{ item.churn_rate }}%
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- BUSINESS INSIGHTS -->
+
+    <section class="card">
+
+        <h2>
+            Key Business Insights
+        </h2>
+
+
+        <div class="feature-grid">
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Churn Monitoring
+                </h3>
+
+                <p>
+
+                    Monitor the overall percentage of
+                    customers leaving the service.
+
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📄
+                </div>
+
+                <h3>
+                    Contract Analysis
+                </h3>
+
+                <p>
+
+                    Identify contract types associated
+                    with different churn patterns.
+
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🌐
+                </div>
+
+                <h3>
+                    Service Analysis
+                </h3>
+
+                <p>
+
+                    Compare churn patterns across
+                    internet service categories.
+
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    💳
+                </div>
+
+                <h3>
+                    Payment Analysis
+                </h3>
+
+                <p>
+
+                    Examine how payment methods relate
+                    to customer churn.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- NAVIGATION -->
+
+    <section class="card">
+
+        <h2>
+            Continue
+        </h2>
+
+
+        <a
+            href="/"
+            class="back-button"
+        >
+            👤 Single Prediction
+        </a>
+
+
+        <a
+            href="/batch"
+            class="back-button"
+        >
+            📁 Batch Prediction
+        </a>
+
+
+        <a
+            href="/model_info"
+            class="back-button"
+        >
+            🤖 Model Performance
+        </a>
+
+    </section>
+
+
+    {% endif %}
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        Customer Churn Intelligence & Prediction Platform
+
+    </footer>
+
+
+</div>
+
+</body>
+
+</html>

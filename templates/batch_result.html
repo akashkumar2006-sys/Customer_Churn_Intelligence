@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Batch Prediction Results</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div>
+
+            <h1>
+                Batch Prediction Results
+            </h1>
+
+            <p>
+                Customer churn analysis results
+            </p>
+
+        </div>
+
+        <div class="badge">
+            Analysis Complete
+        </div>
+
+    </header>
+
+
+    <!-- ERROR -->
+
+    {% if error %}
+
+    <section class="card">
+
+        <div class="error-box">
+
+            <strong>
+                Prediction Error
+            </strong>
+
+            <p>
+                {{ error }}
+            </p>
+
+        </div>
+
+
+        <a
+            href="/batch"
+            class="back-button"
+        >
+
+            ← Try Again
+
+        </a>
+
+    </section>
+
+    {% else %}
+
+
+    <!-- SUMMARY -->
+
+    <section class="card">
+
+        <h2>
+            Customer Summary
+        </h2>
+
+        <p class="description">
+
+            The machine learning model analyzed
+            {{ total_customers }} customers.
+
+        </p>
+
+
+        <div class="result-grid">
+
+
+            <div class="metric-card">
+
+                <span>
+                    Total Customers
+                </span>
+
+                <strong>
+                    {{ total_customers }}
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Predicted Churn
+                </span>
+
+                <strong>
+                    {{ predicted_churn }}
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Predicted Stay
+                </span>
+
+                <strong>
+                    {{ predicted_stay }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- RISK SUMMARY -->
+
+    <section class="card">
+
+        <h2>
+            Risk Distribution
+        </h2>
+
+
+        <p class="description">
+
+            Customers are categorized according
+            to their predicted probability of churn.
+
+        </p>
+
+
+        <div class="result-grid">
+
+
+            <div class="metric-card">
+
+                <span>
+                    🔴 High Risk
+                </span>
+
+                <strong>
+                    {{ high_risk }}
+                </strong>
+
+                <p>
+                    Probability ≥ 70%
+                </p>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    🟠 Medium Risk
+                </span>
+
+                <strong>
+                    {{ medium_risk }}
+                </strong>
+
+                <p>
+                    Probability 40%–69%
+                </p>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    🟢 Low Risk
+                </span>
+
+                <strong>
+                    {{ low_risk }}
+                </strong>
+
+                <p>
+                    Probability &lt; 40%
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- RESULTS TABLE -->
+
+    <section class="card">
+
+        <h2>
+            Prediction Results
+        </h2>
+
+        <p class="description">
+
+            Showing up to the first 50 customers.
+            The complete result is available in the
+            downloadable CSV file.
+
+        </p>
+
+
+        {% if preview %}
+
+        <div class="analysis-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        {% for column in preview[0].keys() %}
+
+                        <th>
+                            {{ column }}
+                        </th>
+
+                        {% endfor %}
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for row in preview %}
+
+                    <tr>
+
+                        {% for value in row.values() %}
+
+                        <td>
+                            {{ value }}
+                        </td>
+
+                        {% endfor %}
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="analysis-box">
+
+            <p>
+                No prediction results are available.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- DOWNLOAD -->
+
+    <section class="card">
+
+        <h2>
+            Download Results
+        </h2>
+
+        <p class="description">
+
+            Download the complete prediction results
+            as a CSV file for further analysis.
+
+        </p>
+
+
+        <a
+            href="/download/{{ download_file }}"
+            class="predict-button"
+        >
+
+            📥 Download Complete Results
+
+        </a>
+
+    </section>
+
+
+
+    <!-- NEXT ACTIONS -->
+
+    <section class="card">
+
+        <h2>
+            Continue Analysis
+        </h2>
+
+
+        <a
+            href="/batch"
+            class="back-button"
+        >
+
+            🔄 Analyze Another CSV
+
+        </a>
+
+
+        <a
+            href="/dashboard"
+            class="back-button"
+        >
+
+            📈 Open Dashboard
+
+        </a>
+
+
+        <a
+            href="/model_info"
+            class="back-button"
+        >
+
+            🤖 View Model Performance
+
+        </a>
+
+
+        <a
+            href="/"
+            class="back-button"
+        >
+
+            👤 Single Prediction
+
+        </a>
+
+    </section>
+
+
+    {% endif %}
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        Customer Churn Intelligence & Prediction Platform
+
+    </footer>
+
+
+</div>
+
+</body>
+
+</html>

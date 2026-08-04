@@ -113,7 +113,7 @@ Customer Input / CSV Upload
 Churn Prediction
        ↓
 Risk Assessment
-
+---
 🛠️ Technologies Used
 Backend
 Python
@@ -132,7 +132,7 @@ Feature preprocessing
 Model evaluation
 Probability-based prediction
 Feature importance analysis
-
+---
 📁 Project Structure
 Customer-Churn-Platform/
 │
@@ -163,6 +163,7 @@ Customer-Churn-Platform/
 ├── uploads/
 │
 └── outputs/
+---
 📋 Dataset Features
 The application uses customer attributes such as:
 Gender
@@ -186,6 +187,7 @@ Monthly Charges
 Total Charges
 
 An optional customerID can be included when performing batch predictions.
+---
 
 ⚙️ Installation
 
@@ -201,6 +203,8 @@ python app.py
 Open the local Flask URL shown in the terminal.
 Usually:
 http://127.0.0.1:5000
+
+---
 
 🔮 How to Use
 Single Prediction
@@ -223,6 +227,8 @@ Open Analytics Dashboard to explore customer churn patterns across different cat
 Model Performance
 Open Model Performance to review the model's evaluation metrics and feature importance.
 
+---
+
 📊 Prediction Output
 
 For individual predictions, the system provides:
@@ -241,6 +247,8 @@ Low Risk Customers
 Detailed Prediction Table
 Downloadable CSV
 
+---
+
 🎯 Risk Classification
 
 The platform categorizes customers based on predicted churn probability.
@@ -254,11 +262,15 @@ Medium Risk
 High Risk
 These thresholds are used to make model output easier to interpret from a business perspective.
 
+---
+
 🔐 Data Handling
 
 Uploaded CSV files are processed by the Flask application to generate predictions.
 Generated prediction files are stored separately from the original dataset.
 For production deployment, additional security and data privacy measures should be implemented before handling real customer information.
+
+---
 
 📚 Learning Objectives
 
@@ -275,6 +287,8 @@ File upload handling
 CSV processing
 Model serialization using Joblib
 Basic ML deployment concepts
+
+---
 
 🚧 Future Improvements
 
@@ -293,9 +307,14 @@ Cloud deployment
 Database integration
 Advanced monitoring and logging
 
+---
+
 👨‍💻 Author
 Akash Kumar Jha
 B.Tech — Artificial Intelligence & Machine Learning
+
+---
+
 
 ⭐ Project Goal
 The goal of this project is to demonstrate how Machine Learning can be integrated into a practical web application to transform customer data into actionable churn insights.

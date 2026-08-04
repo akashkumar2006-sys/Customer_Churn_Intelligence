@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Model Performance</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div>
+
+            <h1>ML Model Performance</h1>
+
+            <p>
+                Training, evaluation and churn factors
+            </p>
+
+        </div>
+
+        <div class="badge">
+            Machine Learning
+        </div>
+
+    </header>
+
+
+    <!-- MODEL OVERVIEW -->
+
+    <section class="card">
+
+        <h2>
+            Model Overview
+        </h2>
+
+        <p class="description">
+
+            The model learns patterns from customer
+            subscription, service and billing information
+            to predict churn.
+
+        </p>
+
+
+        <div class="result-grid">
+
+
+            <div class="metric-card">
+
+                <span>
+                    Model
+                </span>
+
+                <strong>
+                    {{ model_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Training Samples
+                </span>
+
+                <strong>
+                    {{ training_samples }}
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Features
+                </span>
+
+                <strong>
+                    {{ feature_count }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- PERFORMANCE -->
+
+    <section class="card">
+
+        <h2>
+            Evaluation Metrics
+        </h2>
+
+
+        <div class="result-grid">
+
+
+            <div class="metric-card">
+
+                <span>
+                    Accuracy
+                </span>
+
+                <strong>
+                    {{ accuracy }}%
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Precision
+                </span>
+
+                <strong>
+                    {{ precision }}%
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Recall
+                </span>
+
+                <strong>
+                    {{ recall }}%
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="result-grid">
+
+
+            <div class="metric-card">
+
+                <span>
+                    F1 Score
+                </span>
+
+                <strong>
+                    {{ f1_score }}%
+                </strong>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    ROC-AUC
+                </span>
+
+                <strong>
+                    {{ roc_auc }}%
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- CHURN FACTORS -->
+
+    <section class="card">
+
+        <h2>
+            Top Churn Factors
+        </h2>
+
+        <p class="description">
+
+            These are the features with the strongest
+            influence on the model's predictions.
+
+        </p>
+
+
+        {% if feature_importance %}
+
+        <div class="analysis-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Feature
+                        </th>
+
+                        <th>
+                            Coefficient
+                        </th>
+
+                        <th>
+                            Importance
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in feature_importance %}
+
+                    <tr>
+
+                        <td>
+                            {{ item.feature }}
+                        </td>
+
+                        <td>
+                            {{ item.coefficient }}
+                        </td>
+
+                        <td>
+                            {{ item.importance }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="analysis-box">
+
+            <p>
+                Feature importance is not available yet.
+                Retrain the model to generate it.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+    </section>
+
+
+    <!-- METRIC EXPLANATION -->
+
+    <section class="card">
+
+        <h2>
+            Understanding the Metrics
+        </h2>
+
+
+        <div class="analysis-box">
+
+            <h3>
+                Accuracy
+            </h3>
+
+            <p>
+                The percentage of all test predictions
+                that were correct.
+            </p>
+
+        </div>
+
+
+        <div class="analysis-box">
+
+            <h3>
+                Precision
+            </h3>
+
+            <p>
+                Among customers predicted to churn,
+                precision measures how many actually
+                churned.
+            </p>
+
+        </div>
+
+
+        <div class="analysis-box">
+
+            <h3>
+                Recall
+            </h3>
+
+            <p>
+                Measures how effectively the model
+                identifies customers who actually churn.
+            </p>
+
+        </div>
+
+
+        <div class="analysis-box">
+
+            <h3>
+                F1 Score
+            </h3>
+
+            <p>
+                Combines precision and recall into
+                a single balanced metric.
+            </p>
+
+        </div>
+
+
+        <div class="analysis-box">
+
+            <h3>
+                ROC-AUC
+            </h3>
+
+            <p>
+                Measures how well the model separates
+                churned and non-churned customers
+                across classification thresholds.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- NAVIGATION -->
+
+    <section class="card">
+
+        <a href="/"
+           class="back-button">
+            Single Prediction
+        </a>
+
+        <a href="/batch"
+           class="back-button">
+            Batch Prediction
+        </a>
+
+        <a href="/dashboard"
+           class="back-button">
+            Analytics Dashboard
+        </a>
+
+    </section>
+
+
+    <footer>
+
+        Customer Churn Intelligence & Prediction Platform
+
+    </footer>
+
+
+</div>
+
+</body>
+
+</html>

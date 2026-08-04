@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Churn Prediction Result</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div>
+
+            <h1>
+                Customer Churn Prediction
+            </h1>
+
+            <p>
+                Individual customer risk assessment
+            </p>
+
+        </div>
+
+        <div class="badge">
+            ML Prediction
+        </div>
+
+    </header>
+
+
+    {% if error %}
+
+    <!-- ERROR -->
+
+    <section class="card">
+
+        <div class="error-box">
+
+            <strong>
+                Prediction Error
+            </strong>
+
+            <p>
+                {{ error }}
+            </p>
+
+        </div>
+
+
+        <a
+            href="/"
+            class="back-button"
+        >
+
+            ← Try Again
+
+        </a>
+
+    </section>
+
+
+    {% else %}
+
+
+    <!-- MAIN RESULT -->
+
+    <section class="card result-card">
+
+        <h2>
+            Prediction Result
+        </h2>
+
+
+        <div class="prediction-result">
+
+            <div class="prediction-status">
+
+                <span>
+                    Prediction
+                </span>
+
+                <strong>
+                    {{ prediction }}
+                </strong>
+
+            </div>
+
+
+            <div class="prediction-status">
+
+                <span>
+                    Churn Probability
+                </span>
+
+                <strong>
+                    {{ churn_probability }}%
+                </strong>
+
+            </div>
+
+
+            <div class="prediction-status">
+
+                <span>
+                    Risk Level
+                </span>
+
+                <strong>
+                    {{ risk_level }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROBABILITY BAR -->
+
+        <div class="analysis-box">
+
+            <h3>
+                Churn Probability
+            </h3>
+
+
+            <div class="progress-container">
+
+                <div
+                    class="progress-bar"
+                    style="width: {{ churn_probability }}%;"
+                >
+
+                    {{ churn_probability }}%
+
+                </div>
+
+            </div>
+
+
+            <p>
+
+                This percentage represents the model's
+                estimated probability that the customer
+                will churn.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- RISK EXPLANATION -->
+
+    <section class="card">
+
+        <h2>
+            Risk Assessment
+        </h2>
+
+
+        {% if risk_level == "High Risk" %}
+
+        <div class="analysis-box">
+
+            <h3>
+                🔴 High Risk Customer
+            </h3>
+
+            <p>
+
+                The model estimates a relatively high
+                probability of churn for this customer.
+                This customer may require closer
+                attention and retention strategies.
+
+            </p>
+
+        </div>
+
+
+        {% elif risk_level == "Medium Risk" %}
+
+        <div class="analysis-box">
+
+            <h3>
+                🟠 Medium Risk Customer
+            </h3>
+
+            <p>
+
+                The customer shows a moderate estimated
+                probability of churn. Monitoring the
+                customer's engagement and service
+                experience may be useful.
+
+            </p>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="analysis-box">
+
+            <h3>
+                🟢 Low Risk Customer
+            </h3>
+
+            <p>
+
+                The model estimates a relatively low
+                probability of churn for this customer.
+
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- CUSTOMER INFORMATION -->
+
+    <section class="card">
+
+        <h2>
+            Customer Information
+        </h2>
+
+
+        {% if customer_data %}
+
+        <div class="analysis-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Attribute
+                        </th>
+
+                        <th>
+                            Value
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for key, value in customer_data.items() %}
+
+                    <tr>
+
+                        <td>
+                            {{ key }}
+                        </td>
+
+                        <td>
+                            {{ value }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="analysis-box">
+
+            <p>
+                Customer information is unavailable.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- NEXT ACTIONS -->
+
+    <section class="card">
+
+        <h2>
+            Continue Analysis
+        </h2>
+
+
+        <a
+            href="/"
+            class="back-button"
+        >
+
+            👤 New Single Prediction
+
+        </a>
+
+
+        <a
+            href="/batch"
+            class="back-button"
+        >
+
+            📁 Batch Prediction
+
+        </a>
+
+
+        <a
+            href="/dashboard"
+            class="back-button"
+        >
+
+            📈 Analytics Dashboard
+
+        </a>
+
+
+        <a
+            href="/model_info"
+            class="back-button"
+        >
+
+            🤖 Model Performance
+
+        </a>
+
+    </section>
+
+
+    {% endif %}
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        Customer Churn Intelligence & Prediction Platform
+
+    </footer>
+
+
+</div>
+
+</body>
+
+</html>
